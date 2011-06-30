@@ -1,0 +1,39 @@
+
+---------------------       ------------    ------------------     --------------------------
+|   garden sensors     |   ->  |arduino    | ->         |asus router| -> |to/from the clouds|
+---------------------       ------------      -----------------     ---------------------------
+
+Multiple sensors
+Sensor failure
+
+boolean sensors, or numerical measurement
+
+{
+    "report": {
+        "rate_sensor": { "flow":1.64534, "flowing":1 },
+        "tank_level_sensor": { "full":0 },
+        "light_controller": { "onoff": 1 },
+        "fan": { "onoff": 1}
+    }
+}
+
+
+report = js['report']
+if report.has_key('rate_sensor'):
+    rate = report['rate_sensor']["flow"]
+    print rate
+>>> 1.6534
+
+if report.has_key('fan'):
+    temp = ...
+    if temp > 40:
+        ... #turn off fan
+
+
+
+rep = Report(   garden=js['garden'], 
+                    date=js['date'],
+                    rate=js['rate'],
+                    water=js['water'],
+                    tank=js['tank'],
+                    lights=js['lights'])
