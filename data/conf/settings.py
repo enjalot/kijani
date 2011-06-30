@@ -1,40 +1,41 @@
-# Sample Django settings for tegakidb project.
-# Copy your own to ../../tegakidb/ and edit it with your personal settings.
+# Django settings for bacteriabot project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+    # ('Your Name', 'your_email@example.com'),
 )
 
 MANAGERS = ADMINS
-
 import os
-TEGAKIDB_ROOT = '/path/to/hwr/tegaki-db'
-WEBCANVAS_ROOT = '/path/to/hwr/tegaki-webcanvas/webcanvas'
-
-
-DATABASE_ENGINE = 'sqlite3'     # 'postgresql_psycopg2', 'postgresql',
-                                # 'mysql', 'sqlite3' or 'ado_mssql'.
-DATABASE_NAME = os.path.join(TEGAKIDB_ROOT, 'db.db') # Or path to database file if using sqlite3
-DATABASE_USER = ''              # Not used with sqlite3
-DATABASE_PASSWORD = ''          # Not used with sqlite3
-DATABASE_HOST = ''              # Set to empty string for localhost. 
-                                # Not used with sqlite3.
-DATABASE_PORT = ''              # Set to empty string for localhost. 
-                                # Not used with sqlite3.       
+KDB_ROOT = '/home/django/kijani'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        #'ENGINE': 'sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+	#'NAME': '/home/django/kijani/arduino.db',
+	#'NAME': os.path.join(KDB_ROOT,'arduino.db'),
+	'NAME': os.path.join(KDB_ROOT,'db.db'),
+	#'NAME': 'arduino.db',
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
 
 # Local time zone for this installation. Choices can be found here:
-# http://www.postgresql.org/docs/8.1/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
-# although not all variations may be possible on all operating systems.
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# although not all choices may be available on all operating systems.
+# On Unix systems, a value of None will cause Django to use the same
+# timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
 TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
-# http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
-# http://blogs.law.harvard.edu/tech/stories/storyReader$15
+# http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
@@ -43,73 +44,74 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(TEGAKIDB_ROOT, 'data/www/')
+# If you set this to False, Django will not format dates, numbers and
+# calendars according to the current locale
+USE_L10N = True
 
-# URL that handles the media served from MEDIA_ROOT.
-# Example: "http://media.lawrence.com"
-# This should of course point to the actual domain using to host (see usage
-# guide for setting up apache)
-MEDIA_URL = 'http://localhost:8000/static/'
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/media/"
+#MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(KDB_ROOT, 'data/www/')
 
-#if you are hosting site like mydomain.com/tegaki/
-#set BASE_URL = 'tegaki/'
-#or for http://db.tegaki.com/
-#set BASE_URL = ''
-BASE_URL = ''
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/static/media/'
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = 'http://ezev.org/static/'
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/home/media/media.lawrence.com/static/"
+STATIC_ROOT = '/home/django/kijani/data/www/'
+
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
+STATIC_URL = '/static/'
+
+# URL prefix for admin static files -- CSS, JavaScript and images.
+# Make sure to use a trailing slash.
+# Examples: "http://foo.com/static/admin/", "/static/admin/".
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+# Additional locations of static files
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+)
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'secret-key'
+SECRET_KEY = 'z#=sdfdasfsdf9*sdfsdfsdf92nwhb93j93j9u*8u$6c%9(yrinbfkgbb_wpv'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.request",
-    "dojango.context_processors.config",
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.doc.XViewMiddleware',
-    'dojango.middleware.DojoCollector',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-AUTH_PROFILE_MODULE = 'users.TegakiUser'
-
-DOJANGO_DATAGRID_ACCESS = (
-    'users.TegakiUser',
-    'hwdb.HandwritingSample',
-)
-
-DOJANGO_DOJO_THEME="soria"
-
-ROOT_URLCONF = 'tegakidb.urls'
-
-LOGIN_URL =  '/%slogin/' % BASE_URL
-LOGIN_REDIRECT_URL = '/%s' % BASE_URL
+ROOT_URLCONF = 'kijani.urls'
 
 TEMPLATE_DIRS = (
-    os.path.join(TEGAKIDB_ROOT, 'data/templates/'),
-)
-
-FIXTURE_DIRS = (
-    os.path.join(TEGAKIDB_ROOT, 'data/fixtures/'),
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
 )
 
 INSTALLED_APPS = (
@@ -117,12 +119,34 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django.contrib.admin',
-
-    'dojango',
-                
-    'tegakidb.hwdb',    
-    'tegakidb.news',
-    'tegakidb.users',
-    'tegakidb.utils',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    # Uncomment the next line to enable the admin:
+     'django.contrib.admin',
+    # Uncomment the next line to enable admin documentation:
+     'django.contrib.admindocs',
+     'arduino',
 )
+
+# A sample logging configuration. The only tangible logging
+# performed by this configuration is to send an email to
+# the site admins on every HTTP 500 error.
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
