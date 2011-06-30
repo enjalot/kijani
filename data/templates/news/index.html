@@ -1,0 +1,19 @@
+{% extends "base/base.html" %}
+
+{% block title %}Tegaki-db - Latest news{% endblock %}
+
+{% block content %}
+<h1>News</h1>
+{% if latest_news %}
+    <ul>
+    {% for news_item in latest_news %}
+        <h2><a href="{% url news %}{{news_item.id}}/">{{news_item.title}}</a></h2>
+
+        <p>{{news_item.body}}</p>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No news are available.</p>
+{% endif %}
+
+{% endblock %}
