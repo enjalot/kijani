@@ -40,7 +40,7 @@ def upload(request):
                     garden="demo",
                     #date=js['date'],
                     date=datetime.datetime.now(),
-                    arduino_uptime=jsr['arduino_uptime'],
+                    arduino_uptime=jsr['arduino']['uptime'],
                     flow_switch_sensor=jsr['flow_switch_sensor']['flow'],
                     flow_rate=jsr['flow_rate_sensor']['flowRate'],
                     tank_level_sensor=jsr['tank_level_sensor']['full'],
