@@ -13,7 +13,7 @@ def index(request):
 { "report": 
     { 
     "initialize":{"initializing":0, "baudRate":38400}, 
-    "arduino_uptime": "0:00:51:32", 
+    "arduino":{"uptime": "0:00:51:32"}, 
     "tank_level_sensor": { "full":0}, 
     "flow_switch_sensor": { "flow":1}, 
     "flow_rate_sensor": { "flowRate":1.62} 
