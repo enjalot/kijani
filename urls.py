@@ -12,6 +12,7 @@ urlpatterns = patterns('',
      url(r'^arduino/$', 'arduino.views.index',name='home'),
      url(r'^arduino/upload', 'arduino.views.upload',name='upload'),
      url(r'^arduino/latest', 'arduino.views.latest',name='latest'),
+     url(r'^arduino/get_json', 'arduino.views.get_json',name='get_json'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
      url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

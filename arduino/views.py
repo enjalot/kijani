@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 import json
 import datetime
-#from django.core import serializers
+from django.core import serializers
 
 
 from arduino.models import Report
@@ -52,11 +52,41 @@ def upload(request):
     s = 'uploaded report: %s' % jsonreport
     return HttpResponse(s)
 
+def get_json(request):
+    reports = """ """
+    req = request.REQUEST
+    #API parameters
+    if req.has_key('start_date') and req.has_key('end_date'):
+        #date__range=["2011-01-01", "2011-01-31"]
+        dstart = req['start_date']
+        dend = req['end_date']
+        latest_reports = Report.objects.all().order_by('date').filter(date__range=[dstart, dend])
+        
+    else:
+        latest_reports = Report.objects.all().order_by('date')
+    
+    #dev: export array range from all
+    if req.has_key('start_ind') and req.has_key('end_ind'):
+        istart = int(req['start_ind'])
+        iend = int(req['end_ind'])
+        latest_reports = latest_reports[istart:iend]
+
+
+    if req.has_key('num'):
+        num = int(req['num'])
+        latest_reports = latest_reports[:num]
+
+
+    json_reports = serializers.serialize('json', latest_reports);
+    #return json_reports
+    return HttpResponse(json_reports)
+
 
 def latest(request):
 
     reports = """ """
-    latest_reports = Report.objects.all().order_by('-date')[:5]
+    latest_reports = Report.objects.all().order_by('date')[:100]
+    #latest_reports = Report.objects.all().order_by('-date')[:5]
     for report in latest_reports:
         reports += "%s | %s | %s | %f | %d | %d <br>" % (report.garden, report.date, report.arduino_uptime, report.flow_rate, report.flow_switch_sensor, report.tank_level_sensor)#, report.lights)
 
